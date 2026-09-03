@@ -1,0 +1,13 @@
+node_modules/
+dist/
+apps/web/dist/
+.env
+.env.*
+!.env.example
+.local/
+review/
+docs/evidence/
+playwright-report/
+test-results/
+*.log
+.DS_Store

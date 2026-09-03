@@ -1,0 +1,8 @@
+node_modules
+dist
+apps/web/dist
+package-lock.json
+.local
+playwright-report
+test-results
+packages/eta/artifacts/*.json

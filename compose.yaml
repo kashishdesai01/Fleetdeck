@@ -1,0 +1,89 @@
+name: fleetdeck
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: fleetdeck
+      POSTGRES_USER: fleetdeck
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes: [postgres:/var/lib/postgresql/data]
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U fleetdeck']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+  migrate:
+    image: fleetdeck:local
+    build: .
+    command: ['node', 'dist/scripts/migrate.js']
+    environment: &app-env
+      NODE_ENV: ${NODE_ENV:-development}
+      DATABASE_URL: postgres://fleetdeck:${POSTGRES_PASSWORD}@db:5432/fleetdeck
+      INGEST_KEY: ${INGEST_KEY:?Set INGEST_KEY}
+      DEMO_MODE: ${DEMO_MODE:-true}
+      DEMO_ACCESS: ${DEMO_ACCESS:-viewer}
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-http://127.0.0.1:3080}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      ETA_ENABLED: ${ETA_ENABLED:-true}
+    depends_on:
+      db: { condition: service_healthy }
+  seed:
+    image: fleetdeck:local
+    command: ['node', 'dist/scripts/seed.js']
+    environment: *app-env
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+  api:
+    image: fleetdeck:local
+    ports: ['127.0.0.1:3080:3080']
+    environment:
+      <<: *app-env
+      HOST: 0.0.0.0
+      PORT: '3080'
+    depends_on:
+      seed: { condition: service_completed_successfully }
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:3080/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+  worker:
+    image: fleetdeck:local
+    command: ['node', 'dist/apps/worker/src/main.js']
+    environment: *app-env
+    depends_on:
+      seed: { condition: service_completed_successfully }
+    restart: unless-stopped
+    read_only: true
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+  simulator:
+    image: fleetdeck:local
+    command: ['node', 'dist/apps/simulator/src/main.js']
+    environment:
+      API_URL: http://api:3080
+      INGEST_KEY: ${INGEST_KEY}
+      SIM_STATE_FILE: /app/.local/simulator.json
+    volumes: [simulator:/app/.local]
+    depends_on:
+      api: { condition: service_healthy }
+    restart: unless-stopped
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+volumes:
+  postgres:
+  simulator:

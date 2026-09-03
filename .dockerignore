@@ -1,0 +1,12 @@
+node_modules
+.local
+.env
+.env.*
+dist
+apps/web/dist
+.git
+review
+playwright-report
+test-results
+docs
+tests
