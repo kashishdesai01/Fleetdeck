@@ -1,0 +1,362 @@
+[
+  {
+    "features": {
+      "distance": 559.264214723371,
+      "turns": 2,
+      "battery": 35.087523254333064,
+      "congestion": 0.21667406409978868
+    },
+    "expected": 36.531679189850365
+  },
+  {
+    "features": {
+      "distance": 940.0131778046489,
+      "turns": 2,
+      "battery": 86.04224918526597,
+      "congestion": 0.21667406409978868
+    },
+    "expected": 55.39493853130458
+  },
+  {
+    "features": {
+      "distance": 179.8788127535954,
+      "turns": 2,
+      "battery": 70.91607362381183,
+      "congestion": 0.21667406409978868
+    },
+    "expected": 14.51279512934374
+  },
+  {
+    "features": {
+      "distance": 490.0805445481092,
+      "turns": 2,
+      "battery": 75.11857599602081,
+      "congestion": 0.21667406409978868
+    },
+    "expected": 31.361671466833666
+  },
+  {
+    "features": {
+      "distance": 943.0741972150281,
+      "turns": 2,
+      "battery": 30.718107958091423,
+      "congestion": 0.21667406409978868
+    },
+    "expected": 61.87323223078846
+  },
+  {
+    "features": {
+      "distance": 283.9005892537534,
+      "turns": 2,
+      "battery": 64.25048823584802,
+      "congestion": 0.21667406409978868
+    },
+    "expected": 20.32022313838662
+  },
+  {
+    "features": {
+      "distance": 769.5310649159364,
+      "turns": 2,
+      "battery": 73.7873948761262,
+      "congestion": 0.05110216159373522
+    },
+    "expected": 40.50154082249558
+  },
+  {
+    "features": {
+      "distance": 596.76784200361,
+      "turns": 2,
+      "battery": 90.77481289859861,
+      "congestion": 0.05110216159373522
+    },
+    "expected": 32.33937197383264
+  },
+  {
+    "features": {
+      "distance": 483.9885245845653,
+      "turns": 2,
+      "battery": 64.14495174540207,
+      "congestion": 0.05110216159373522
+    },
+    "expected": 27.856965235056173
+  },
+  {
+    "features": {
+      "distance": 364.2847148585133,
+      "turns": 2,
+      "battery": 90.66775301471353,
+      "congestion": 0.05110216159373522
+    },
+    "expected": 21.852424783983675
+  },
+  {
+    "features": {
+      "distance": 284.3938607419841,
+      "turns": 2,
+      "battery": 25.26539881946519,
+      "congestion": 0.05110216159373522
+    },
+    "expected": 20.95692504163976
+  },
+  {
+    "features": {
+      "distance": 414.4933819002472,
+      "turns": 2,
+      "battery": 99.02688583824784,
+      "congestion": 0.05110216159373522
+    },
+    "expected": 24.416981378993174
+  },
+  {
+    "features": {
+      "distance": 914.1488938871771,
+      "turns": 2,
+      "battery": 37.487266497919336,
+      "congestion": 0.6855302590876818
+    },
+    "expected": 95.69378948371842
+  },
+  {
+    "features": {
+      "distance": 767.038632039912,
+      "turns": 2,
+      "battery": 95.50737661193125,
+      "congestion": 0.6855302590876818
+    },
+    "expected": 76.25837422088505
+  },
+  {
+    "features": {
+      "distance": 314.8465562798083,
+      "turns": 2,
+      "battery": 57.37382986699231,
+      "congestion": 0.6855302590876818
+    },
+    "expected": 33.08430625075273
+  },
+  {
+    "features": {
+      "distance": 267.69895762670785,
+      "turns": 2,
+      "battery": 31.216930033406243,
+      "congestion": 0.6855302590876818
+    },
+    "expected": 33.22774502745372
+  },
+  {
+    "features": {
+      "distance": 456.4005303848535,
+      "turns": 2,
+      "battery": 94.81268968083896,
+      "congestion": 0.6855302590876818
+    },
+    "expected": 47.495054213872905
+  },
+  {
+    "features": {
+      "distance": 831.6306469449773,
+      "turns": 2,
+      "battery": 58.80328344064765,
+      "congestion": 0.6855302590876818
+    },
+    "expected": 82.03743584877404
+  },
+  {
+    "features": {
+      "distance": 863.4087665309198,
+      "turns": 2,
+      "battery": 76.18713811971247,
+      "congestion": 0.5199583565816284
+    },
+    "expected": 67.89153515233237
+  },
+  {
+    "features": {
+      "distance": 340.8451060834341,
+      "turns": 2,
+      "battery": 25.239940325263888,
+      "congestion": 0.5199583565816284
+    },
+    "expected": 35.94718976992101
+  },
+  {
+    "features": {
+      "distance": 395.4624260752462,
+      "turns": 2,
+      "battery": 50.60270798858255,
+      "congestion": 0.5199583565816284
+    },
+    "expected": 34.47405986565502
+  },
+  {
+    "features": {
+      "distance": 746.8298116908409,
+      "turns": 2,
+      "battery": 46.76610705209896,
+      "congestion": 0.5199583565816284
+    },
+    "expected": 61.31678969246478
+  },
+  {
+    "features": {
+      "distance": 393.06369696976617,
+      "turns": 2,
+      "battery": 89.35998054221272,
+      "congestion": 0.5199583565816284
+    },
+    "expected": 34.60477135839479
+  },
+  {
+    "features": {
+      "distance": 534.3962650443427,
+      "turns": 2,
+      "battery": 93.57968104304746,
+      "congestion": 0.5199583565816284
+    },
+    "expected": 46.54177306975638
+  },
+  {
+    "features": {
+      "distance": 691.6826221393421,
+      "turns": 2,
+      "battery": 39.88700974150561,
+      "congestion": 0.3543864540755749
+    },
+    "expected": 50.49770787959432
+  },
+  {
+    "features": {
+      "distance": 245.3484198730439,
+      "turns": 2,
+      "battery": 29.972504038596526,
+      "congestion": 0.3543864540755749
+    },
+    "expected": 23.526303633147357
+  },
+  {
+    "features": {
+      "distance": 449.81429980602115,
+      "turns": 2,
+      "battery": 43.83158611017279,
+      "congestion": 0.3543864540755749
+    },
+    "expected": 33.35980295782089
+  },
+  {
+    "features": {
+      "distance": 554.6826292946935,
+      "turns": 2,
+      "battery": 62.31528407079168,
+      "congestion": 0.3543864540755749
+    },
+    "expected": 40.77708144061173
+  },
+  {
+    "features": {
+      "distance": 689.7268635546789,
+      "turns": 2,
+      "battery": 83.90727140358649,
+      "congestion": 0.3543864540755749
+    },
+    "expected": 49.426706582647704
+  },
+  {
+    "features": {
+      "distance": 828.8497618306428,
+      "turns": 2,
+      "battery": 53.35607864544727,
+      "congestion": 0.3543864540755749
+    },
+    "expected": 56.59517728696481
+  },
+  {
+    "features": {
+      "distance": 508.5240873671137,
+      "turns": 2,
+      "battery": 78.58688136329874,
+      "congestion": 0.18881455156952143
+    },
+    "expected": 32.16635526126875
+  },
+  {
+    "features": {
+      "distance": 398.45805417047814,
+      "turns": 2,
+      "battery": 34.705067751929164,
+      "congestion": 0.18881455156952143
+    },
+    "expected": 27.6780590593545
+  },
+  {
+    "features": {
+      "distance": 477.2981715691276,
+      "turns": 2,
+      "battery": 37.060464231763035,
+      "congestion": 0.18881455156952143
+    },
+    "expected": 31.27524141067931
+  },
+  {
+    "features": {
+      "distance": 270.6250914768316,
+      "turns": 2,
+      "battery": 77.8644610894844,
+      "congestion": 0.18881455156952143
+    },
+    "expected": 19.074775661003
+  },
+  {
+    "features": {
+      "distance": 575.2017120062374,
+      "turns": 2,
+      "battery": 78.45456226496026,
+      "congestion": 0.18881455156952143
+    },
+    "expected": 35.89320900217659
+  },
+  {
+    "features": {
+      "distance": 300.0724987569265,
+      "turns": 2,
+      "battery": 88.13247624784708,
+      "congestion": 0.18881455156952143
+    },
+    "expected": 21.254409899507763
+  },
+  {
+    "features": {
+      "distance": 463.9182522147894,
+      "turns": 2,
+      "battery": 42.28675298509188,
+      "congestion": 0.02324264906346798
+    },
+    "expected": 27.1753883342258
+  },
+  {
+    "features": {
+      "distance": 512.7734683593735,
+      "turns": 2,
+      "battery": 39.4376314652618,
+      "congestion": 0.02324264906346798
+    },
+    "expected": 29.50710411080207
+  },
+  {
+    "features": {
+      "distance": 944.782043332234,
+      "turns": 2,
+      "battery": 30.289342353353277,
+      "congestion": 0.02324264906346798
+    },
+    "expected": 55.48648753275528
+  },
+  {
+    "features": {
+      "distance": 439.3525430606678,
+      "turns": 2,
+      "battery": 93.41363810817711,
+      "congestion": 0.02324264906346798
+    },
+    "expected": 25.843227704604228
+  }
+]

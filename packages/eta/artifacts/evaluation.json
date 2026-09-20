@@ -1,0 +1,314 @@
+{
+  "version": "eta-gbr-v1-e5e859ce7d69",
+  "boundary": "Synthetic dispatch-to-observed-completion only; no real fleet accuracy claim.",
+  "trainerSha256": "511370bb9d8061743e7585b518cc53c312e7977b935d632895fa3c73a4db3310",
+  "requirementsSha256": "350a9bfdfc99ecad5711a2abbf6da96986c2837e8ae650cfab99119e0c2bd5fc",
+  "model": "scikit-learn GradientBoostingRegressor",
+  "params": {
+    "n_estimators": 140,
+    "max_depth": 3,
+    "min_samples_leaf": 15,
+    "learning_rate": 0.06,
+    "loss": "squared_error",
+    "random_state": 731
+  },
+  "python": "3.13.12",
+  "sklearn": "1.7.2",
+  "numpy": "2.3.4",
+  "modelSha256": "1739594c07e6d39b33b514d40bf4f86cd4181526d83e74c52fa683492480c61a",
+  "dataset": {
+    "generator": "fleetdeck-eta-v1",
+    "seedScheme": "FNV1a(run identity) + LCG32",
+    "rows": 7260,
+    "sha256": "ebd78306a827594f80fe6c71e6f93d78715a92230dd4bb25f069bc8fa2617e23",
+    "plan": [
+      {
+        "split": "train",
+        "runs": 600,
+        "scenario": "normal"
+      },
+      {
+        "split": "validation",
+        "runs": 100,
+        "scenario": "normal"
+      },
+      {
+        "split": "calibration",
+        "runs": 150,
+        "scenario": "normal"
+      },
+      {
+        "split": "test",
+        "runs": 200,
+        "scenario": "normal"
+      },
+      {
+        "split": "stress",
+        "runs": 80,
+        "scenario": "severe_congestion"
+      },
+      {
+        "split": "stress",
+        "runs": 80,
+        "scenario": "hidden_delays"
+      }
+    ],
+    "sources": {
+      "packages/simulation/src/motion.ts": "bbd50f1e8ce1d6d3aab1ef15a65d133a1eda7efc188500101c3f1dc48f21d839",
+      "packages/eta/src/features.ts": "f33b10176c62f10ceb72f6ad8ef86e316e5d18ff918c2075c7e08fb3c3b5e5e4",
+      "scripts/eta-data.ts": "f7d2bec97056d2fe6e77b4fa0596d8240fb0685e1961b1fd0b62418858108e9d"
+    }
+  },
+  "splits": {
+    "train": {
+      "missions": 3600,
+      "runs": 600
+    },
+    "validation": {
+      "missions": 600,
+      "runs": 100
+    },
+    "calibration": {
+      "missions": 900,
+      "runs": 150
+    },
+    "test": {
+      "missions": 1200,
+      "runs": 200
+    },
+    "stress": {
+      "missions": 960,
+      "runs": 160
+    }
+  },
+  "validation": {
+    "model_mae_seconds": 4.212466798623993,
+    "baselines": {
+      "constant_speed": 19.947686353722755,
+      "learned_speed": 9.650145590726511,
+      "linear": 5.142386258535455
+    },
+    "promotionPolicy": "At least 5% lower validation MAE than all three baselines.",
+    "promoted": true
+  },
+  "calibration": {
+    "method": "Split conformal, per-run maximum absolute residual",
+    "runs": 150,
+    "radius_seconds": 17.167792431173964,
+    "nominal_simultaneous_run_coverage": 0.9,
+    "assumption": "Independent exchangeable synthetic runs; no coverage guarantee under distribution shift."
+  },
+  "evaluation": {
+    "test": {
+      "missions": 1200,
+      "runs": 200,
+      "model_mae_seconds": 4.645215980417366,
+      "model_p95_error_seconds": 14.575937241376465,
+      "constant_speed_mae_seconds": 20.313977259838072,
+      "learned_speed_mae_seconds": 9.120942432782677,
+      "linear_mae_seconds": 5.782388425443066,
+      "paired_mae_delta_95pct_ci_seconds": [
+        -16.910963551255595,
+        -14.484355282684431
+      ],
+      "mission_interval_coverage": 0.9733333333333334,
+      "simultaneous_run_interval_coverage": 0.915,
+      "mean_interval_width_seconds": 34.30427754438582
+    },
+    "severe_congestion": {
+      "missions": 480,
+      "runs": 80,
+      "model_mae_seconds": 15.243474002271304,
+      "model_p95_error_seconds": 42.72782748192974,
+      "constant_speed_mae_seconds": 54.77077584721815,
+      "learned_speed_mae_seconds": 35.70431787078049,
+      "linear_mae_seconds": 16.94145471101055,
+      "paired_mae_delta_95pct_ci_seconds": [
+        -41.061086495697936,
+        -37.95645043975939
+      ],
+      "mission_interval_coverage": 0.6791666666666667,
+      "simultaneous_run_interval_coverage": 0.2625,
+      "mean_interval_width_seconds": 34.33558486234792
+    },
+    "hidden_delays": {
+      "missions": 480,
+      "runs": 80,
+      "model_mae_seconds": 39.31393057250167,
+      "model_p95_error_seconds": 54.06070652241671,
+      "constant_speed_mae_seconds": 61.06522170629146,
+      "learned_speed_mae_seconds": 41.859709731554446,
+      "linear_mae_seconds": 39.60221460004264,
+      "paired_mae_delta_95pct_ci_seconds": [
+        -24.10738525624559,
+        -19.41651499602313
+      ],
+      "mission_interval_coverage": 0.0020833333333333333,
+      "simultaneous_run_interval_coverage": 0.0,
+      "mean_interval_width_seconds": 34.30973897057658
+    }
+  },
+  "heldOutExamples": {
+    "largest_model_losses": [
+      {
+        "runId": "test/normal/146",
+        "mission": 3,
+        "features": {
+          "distance": 971.683594121132,
+          "turns": 2,
+          "battery": 93.03971946937963,
+          "congestion": 0.04206726308912039
+        },
+        "observed_seconds": 43.929293101187795,
+        "model_seconds": 54.96859308806327,
+        "baseline_seconds": 40.48681642171383,
+        "model_absolute_error_seconds": 11.039299986875477,
+        "baseline_absolute_error_seconds": 3.4424766794739625
+      },
+      {
+        "runId": "test/normal/47",
+        "mission": 5,
+        "features": {
+          "distance": 547.5334487645887,
+          "turns": 2,
+          "battery": 55.70851860102266,
+          "congestion": 0.7693141179159284
+        },
+        "observed_seconds": 40.76427254686132,
+        "model_seconds": 64.13586146073756,
+        "baseline_seconds": 22.813893698524527,
+        "model_absolute_error_seconds": 23.371588913876238,
+        "baseline_absolute_error_seconds": 17.950378848336793
+      },
+      {
+        "runId": "test/normal/69",
+        "mission": 4,
+        "features": {
+          "distance": 858.1270220526494,
+          "turns": 2,
+          "battery": 81.359381636139,
+          "congestion": 0.15150670353323223
+        },
+        "observed_seconds": 39.82845560600981,
+        "model_seconds": 48.88064672772938,
+        "baseline_seconds": 35.75529258552706,
+        "model_absolute_error_seconds": 9.052191121719567,
+        "baseline_absolute_error_seconds": 4.0731630204827525
+      },
+      {
+        "runId": "test/normal/91",
+        "mission": 5,
+        "features": {
+          "distance": 673.8612383883446,
+          "turns": 2,
+          "battery": 39.952550042653456,
+          "congestion": 0.016869718581438067
+        },
+        "observed_seconds": 30.47665735706687,
+        "model_seconds": 37.34172530913645,
+        "baseline_seconds": 28.07755159951436,
+        "model_absolute_error_seconds": 6.86506795206958,
+        "baseline_absolute_error_seconds": 2.3991057575525083
+      },
+      {
+        "runId": "test/normal/139",
+        "mission": 4,
+        "features": {
+          "distance": 741.3691272609867,
+          "turns": 2,
+          "battery": 85.96790762385353,
+          "congestion": 0.5306195462122559
+        },
+        "observed_seconds": 44.12581436475739,
+        "model_seconds": 61.50096539326876,
+        "baseline_seconds": 30.890380302541114,
+        "model_absolute_error_seconds": 17.375151028511368,
+        "baseline_absolute_error_seconds": 13.235434062216274
+      }
+    ],
+    "largest_model_improvements": [
+      {
+        "runId": "test/normal/100",
+        "mission": 1,
+        "features": {
+          "distance": 898.5680063976906,
+          "turns": 2,
+          "battery": 26.32876809220761,
+          "congestion": 0.6198174985125662
+        },
+        "observed_seconds": 109.7583028213121,
+        "model_seconds": 94.94154693888396,
+        "baseline_seconds": 37.440333599903774,
+        "model_absolute_error_seconds": 14.81675588242814,
+        "baseline_absolute_error_seconds": 72.31796922140833
+      },
+      {
+        "runId": "test/normal/148",
+        "mission": 0,
+        "features": {
+          "distance": 702.4546075449325,
+          "turns": 2,
+          "battery": 25.532692193519324,
+          "congestion": 0.786348238028586
+        },
+        "observed_seconds": 95.80465050553903,
+        "model_seconds": 87.50315984108951,
+        "baseline_seconds": 29.268941981038854,
+        "model_absolute_error_seconds": 8.301490664449517,
+        "baseline_absolute_error_seconds": 66.53570852450018
+      },
+      {
+        "runId": "test/normal/104",
+        "mission": 2,
+        "features": {
+          "distance": 807.3368412372656,
+          "turns": 2,
+          "battery": 27.531743759755045,
+          "congestion": 0.7575298884883523
+        },
+        "observed_seconds": 111.43012490822002,
+        "model_seconds": 99.57326120865086,
+        "baseline_seconds": 33.63903505155273,
+        "model_absolute_error_seconds": 11.85686369956916,
+        "baseline_absolute_error_seconds": 77.7910898566673
+      },
+      {
+        "runId": "test/normal/40",
+        "mission": 1,
+        "features": {
+          "distance": 1057.3359085293487,
+          "turns": 2,
+          "battery": 31.58538536517881,
+          "congestion": 0.7414546053856612
+        },
+        "observed_seconds": 127.49367959145457,
+        "model_seconds": 112.15393097981001,
+        "baseline_seconds": 44.05566285538953,
+        "model_absolute_error_seconds": 15.339748611644552,
+        "baseline_absolute_error_seconds": 83.43801673606504
+      },
+      {
+        "runId": "test/normal/156",
+        "mission": 1,
+        "features": {
+          "distance": 1031.861934075132,
+          "turns": 2,
+          "battery": 28.532216750318184,
+          "congestion": 0.7720340035855771
+        },
+        "observed_seconds": 148.37949516251683,
+        "model_seconds": 118.1638426419591,
+        "baseline_seconds": 42.9942472531305,
+        "model_absolute_error_seconds": 30.215652520557725,
+        "baseline_absolute_error_seconds": 105.38524790938632
+      }
+    ]
+  },
+  "servingPolicy": "Baseline for disabled/unavailable/unpromoted model or out-of-support features; no calibrated interval on fallback.",
+  "exclusions": [
+    "No training on live demo missions",
+    "No future speed, pauses, execution seed or final battery in features",
+    "Severe congestion and hidden delays excluded from training, validation and calibration",
+    "Stress metrics show raw model behavior; severe congestion is rejected by serving support guard"
+  ]
+}
