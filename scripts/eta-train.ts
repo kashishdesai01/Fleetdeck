@@ -1,5 +1,8 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { ModelSchema } from '../packages/eta/src/predict.js';
+import { assertEquivalent } from '../packages/eta/src/reproduction.js';
 const python =
   process.env.ETA_PYTHON ??
   (existsSync('.local/ml-venv/bin/python') ? '.local/ml-venv/bin/python' : 'python3');
@@ -9,18 +12,26 @@ const result = spawnSync(python, ['ml/train_eta.py', '--output', output], { stdi
 if (result.error) throw result.error;
 if (result.status !== 0) process.exit(result.status ?? 1);
 if (reproduce) {
-  for (const name of ['model.json', 'parity.json']) {
-    if (!readFileSync(`${output}/${name}`).equals(readFileSync(`packages/eta/artifacts/${name}`)))
-      throw new Error(
-        `Reproduction differs: ${name}. Use the pinned environment and inspect the source/data hashes.`,
-      );
+  const read = (directory: string, name: string) =>
+    JSON.parse(readFileSync(`${directory}/${name}`, 'utf8'));
+  const candidateModel = ModelSchema.parse(read(output, 'model.json'));
+  const releaseModel = ModelSchema.parse(read('packages/eta/artifacts', 'model.json'));
+  const report = read(output, 'evaluation.json');
+  const release = read('packages/eta/artifacts', 'evaluation.json');
+  for (const [directory, model, evaluation] of [
+    [output, candidateModel, report],
+    ['packages/eta/artifacts', releaseModel, release],
+  ] as const) {
+    const checksum = createHash('sha256')
+      .update(readFileSync(`${directory}/model.json`))
+      .digest('hex');
+    if (checksum !== evaluation.modelSha256 || model.version !== evaluation.version)
+      throw new Error(`Model checksum or version does not match its manifest: ${directory}`);
   }
-  const report = JSON.parse(readFileSync(`${output}/evaluation.json`, 'utf8'));
-  const release = JSON.parse(readFileSync('packages/eta/artifacts/evaluation.json', 'utf8'));
-  // Interpreter patch versions are metadata; all data, decisions and metrics must reproduce.
-  delete report.python;
-  delete release.python;
-  if (JSON.stringify(report) !== JSON.stringify(release))
-    throw new Error('Reproduced evaluation/provenance differs from the release.');
-  console.log('Reproduced release model and Python parity vectors byte-for-byte.');
+  assertEquivalent(candidateModel, releaseModel, '$', ['version']);
+  assertEquivalent(read(output, 'parity.json'), read('packages/eta/artifacts', 'parity.json'));
+  assertEquivalent(report, release, '$', ['python', 'version', 'modelSha256']);
+  console.log(
+    'Reproduced model structure, provenance, predictions and evaluation within numerical tolerance (1e-8 absolute + 1e-10 relative).',
+  );
 }

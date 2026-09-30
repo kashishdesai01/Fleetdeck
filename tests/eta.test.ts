@@ -8,12 +8,45 @@ import { ModelSchema, predict, treePrediction } from '../packages/eta/src/predic
 import { features, baseline, type EtaFeatures } from '../packages/eta/src/features.js';
 import { startMotion, stepMotion } from '../packages/simulation/src/motion.js';
 import { EtaEstimator } from '../apps/api/src/eta.js';
+import { assertEquivalent } from '../packages/eta/src/reproduction.js';
 
 const modelBytes = readFileSync('packages/eta/artifacts/model.json');
 const model = ModelSchema.parse(JSON.parse(modelBytes.toString()));
 const sample = { distance: 600, turns: 2, battery: 85, congestion: 0.4 };
 const at = '2026-10-19T12:00:00.000Z';
 describe('ETA model release and serving', () => {
+  it('accepts floating point roundoff but rejects material numeric changes', () => {
+    expect(() =>
+      assertEquivalent({ score: 4.645215980417366 }, { score: 4.645215980417367 }),
+    ).not.toThrow();
+    expect(() => assertEquivalent({ score: 4.65 }, { score: 4.64 })).toThrow();
+    expect(() => assertEquivalent(NaN, NaN)).toThrow();
+  });
+  it('requires the same tree structure, metadata and dataset identity', () => {
+    expect(() =>
+      assertEquivalent({ left: [1, -1], sha256: 'a' }, { left: [2, -1], sha256: 'a' }),
+    ).toThrow();
+    expect(() => assertEquivalent({ sha256: 'a' }, { sha256: 'b' })).toThrow();
+    expect(() => assertEquivalent([1, 2], [1])).toThrow();
+  });
+  it('allows only explicitly excluded root metadata to vary', () => {
+    expect(() =>
+      assertEquivalent(
+        { version: 'a', nested: { version: 'b' } },
+        { version: 'c', nested: { version: 'b' } },
+        '$',
+        ['version'],
+      ),
+    ).not.toThrow();
+    expect(() =>
+      assertEquivalent(
+        { version: 'a', nested: { version: 'b' } },
+        { version: 'c', nested: { version: 'd' } },
+        '$',
+        ['version'],
+      ),
+    ).toThrow();
+  });
   it('matches scikit-learn predictions across exported parity vectors', () => {
     const vectors = JSON.parse(readFileSync('packages/eta/artifacts/parity.json', 'utf8')) as {
       features: EtaFeatures;

@@ -56,7 +56,7 @@ npm run eta:train
 npm run eta:reproduce
 ```
 
-`ETA_PYTHON=/path/to/python` selects another interpreter. Dataset generation writes to `.local/eta`; training writes release artifacts to `packages/eta/artifacts`. Reproduction builds a separate candidate and checks it against the release. All missions from a run stay in one partition throughout fitting, calibration, and evaluation.
+`ETA_PYTHON=/path/to/python` selects another interpreter. Dataset generation writes to `.local/eta`; training writes release artifacts to `packages/eta/artifacts`. Reproduction checks tree structure, source and dataset hashes, parity predictions, decisions, and evaluation against the release. Numeric values use a tolerance of 1e-8 absolute plus 1e-10 relative; each artifact's checksum is checked against its own manifest. All missions from a run stay in one partition throughout fitting, calibration, and evaluation.
 
 ## Serving
 
