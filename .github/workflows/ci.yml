@@ -15,7 +15,7 @@ jobs:
           POSTGRES_PASSWORD: ci_only_password
         ports: ['5432:5432']
         options: >-
-          --health-cmd 'pg_isready -U fleetdeck'
+          --health-cmd "pg_isready -U fleetdeck"
           --health-interval 2s --health-timeout 3s --health-retries 30
     env:
       DATABASE_URL: postgres://fleetdeck:ci_only_password@127.0.0.1:5432/fleetdeck_test
